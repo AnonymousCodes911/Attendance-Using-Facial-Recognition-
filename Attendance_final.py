@@ -2,11 +2,12 @@ import cv2
 import numpy as np
 import face_recognition
 import os
+import datetime
 from datetime import datetime
 from pathlib import Path
+from modules import markAttendance, findEncodings
 
-
-path='C:\\Users\\91962\\Desktop\\Attendance\\Images'
+path='img'
 
 
 images= []
@@ -23,29 +24,27 @@ for cl in myList:
 print(classNames)
 
 
-def findEncodings(images):
-    encodeList=[]
-    for img in images:
-        img= cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
-        encode=face_recognition.face_encodings(img)[0]
-        encodeList.append(encode)
-    return encodeList
+# def findEncodings(images):
+#     encodeList=[]
+#     for img in images:
+#         img= cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
+#         encode=face_recognition.face_encodings(img)[0]
+#         encodeList.append(encode)
+#     return encodeList
 
 
-def markAttendance(name):
-    with open('C:\\Users\\91962\\Desktop\\Attendance\\Attendance_finals.csv','r+') as f :
-        myDataList= f.readlines()
+# def markAttendance(name):
+#     with open('Attendance_finals.csv','r+') as f :
+#         myDataList= f.readlines()
 
-        nameList=[]
-        for line in myDataList:
-            entry= line.split(',')
-            nameList.append(entry[0])
-        if name not in nameList:
-            now = datetime.now()
-            dtString= now.strftime('%H:%M:%S')
-            f.writelines(f'\n{name},{dtString}')
-
-
+#         nameList=[]
+#         for line in myDataList:
+#             entry= line.split(',')
+#             nameList.append(entry[0])
+#         if name not in nameList:
+#             now = datetime.now()
+#             dtString= now.strftime('%H:%M:%S')
+#             f.writelines(f'\n{name},{dtString}')
 
 
 encodeListKnown= findEncodings(images)
@@ -87,5 +86,3 @@ while True:
 
     cv2.imshow('Test_Window',img)
     cv2.waitKey(1)
-
- 
